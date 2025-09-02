@@ -44,17 +44,6 @@ RULES_CC_COMMIT_ID = "0913abc3be0edff60af681c0473518f51fb9eeef"  # 2021-08-12T14
 
 RULES_CC_SHA256 = "04d22a8c6f0caab1466ff9ae8577dbd12a0c7d0bc468425b75de094ec68ab4f9"
 
-#python_rules
-http_archive(
-    name = "rules_python",
-    sha256 = "0a1cefefb4a7b550fb0b43f54df67d6da95b7ba352637669e46c987f69986f6a",  # for 1.5.3
-    strip_prefix = "rules_python-1.5.3",
-    url = "https://github.com/bazel-contrib/rules_python/releases/download/1.5.3/rules_python-1.5.3.tar.gz",
-)
-load("@rules_python//python:repositories.bzl", "py_repositories")
-py_repositories() 
-
-
 #
 # Starlark libraries
 #

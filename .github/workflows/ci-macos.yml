@@ -50,6 +50,7 @@ jobs:
       - name: install dependences
         run: |
           brew install openssl gnu-getopt coreutils gflags leveldb protobuf@29 pegtl
+          brew uninstall cmake
           brew tap couchbaselabs/homebrew-couchbase
           brew install couchbase-cxx-client
           # abseil 20230125.3
