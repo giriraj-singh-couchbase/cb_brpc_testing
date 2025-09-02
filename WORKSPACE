@@ -52,7 +52,7 @@ http_archive(
     url = "https://github.com/bazel-contrib/rules_python/releases/download/1.5.3/rules_python-1.5.3.tar.gz",
 )
 load("@rules_python//python:repositories.bzl", "py_repositories")
-py_repositories()
+py_repositories() 
 
 
 #

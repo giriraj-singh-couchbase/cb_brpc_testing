@@ -24,6 +24,7 @@ jobs:
       run: |
            brew install protobuf
            brew install openssl gnu-getopt coreutils gflags leveldb pegtl
+           brew uninstall cmake
            brew tap couchbaselabs/homebrew-couchbase
            brew install couchbase-cxx-client
 
