@@ -67,3 +67,4 @@ jobs:
         run: |
           mkdir build && cd build && cmake ..
           make -j ${{env.proc_num}} && make clean
+          
