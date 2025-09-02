@@ -18,6 +18,7 @@
 build/
 
 # Ignore hidden files
+.*
 *.swp
 
 # Ignore auto-generated files
