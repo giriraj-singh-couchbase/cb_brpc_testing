@@ -20,6 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-all-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
 
     - name: gcc with default options
       uses: ./.github/actions/compile-with-make
@@ -78,6 +79,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
 
     - name: protobuf 3.5.1
       uses: ./.github/actions/compile-with-make-protobuf
@@ -107,25 +109,50 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
-    - run: bazel build --verbose_failures -- //... -//example/...
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
+    - run: bazel build --verbose_failures --action_env=CC=clang -- //... -//example/...
 
   gcc-compile-with-boringssl:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
-    - run: bazel build --verbose_failures --define with_mesalink=false --define with_glog=true --define with_thrift=true --define BRPC_WITH_BORINGSSL=true -- //... -//example/...
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
+    - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define BRPC_WITH_BORINGSSL=true -- //... -//example/...
 
   gcc-compile-with-bazel-all-options:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
-    - run: bazel build --verbose_failures --define with_mesalink=false --define with_glog=true --define with_thrift=true --define with_debug_bthread_sche_safety=true --define with_debug_lock=true --define with_asan=true -- //... -//example/...
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
+    - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define with_debug_bthread_sche_safety=true --define with_debug_lock=true --define with_asan=true -- //... -//example/...
 
   clang-compile-with-make-protobuf:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
 
     - name: protobuf 3.5.1
       uses: ./.github/actions/compile-with-make-protobuf
@@ -155,18 +182,42 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang -- //... -//example/...
 
   clang-compile-with-boringssl:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define BRPC_WITH_BORINGSSL=true -- //... -//example/...
 
   clang-compile-with-bazel-all-options:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
+    - uses: ./.github/actions/install-essential-dependencies
+    - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define with_debug_bthread_sche_safety=true --define with_debug_lock=true --define with_asan=true -- //... -//example/...
 
   clang-unittest:

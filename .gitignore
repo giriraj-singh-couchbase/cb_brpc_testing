@@ -26,6 +26,7 @@ config.mk
 src/butil/config.h
 
 # Ignore CMake files
+/third_party/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
