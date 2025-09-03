@@ -40,16 +40,31 @@ git_override(
     remote = 'https://github.com/hedronvision/bazel-compile-commands-extractor.git',
     commit = '1e08f8e0507b6b6b1f4416a9a22cf5c28beaba93', # Jun 28, 2024
 )
+# Declare the dependency
 bazel_dep(name = "rules_python", version = "1.5.4")
 
+# Load rules_python's extensions only once
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(python_version = "3.13")
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+# Parse and expose the @pypi repo (if used in your main workspace)
 pip.parse(
-  hub_name = "pypi",
-  python_version = "3.13",
-  requirements_lock = "//:requirements_lock.txt",
+    hub_name = "pypi",
+    python_version = "3.13",
+    requirements_lock = "//:requirements_lock.txt",
 )
+
+# Parse and expose the @py_deps repo (if required by a transitive dep)
+pip.parse(
+    hub_name = "py_deps",
+    python_version = "3.11",  # match expected version; doesn't need to be different
+    requirements_lock = "//:requirements_lock.txt",  # same file is OK
+)
+
+# Make them both visible to the build
 use_repo(pip, "pypi")
+use_repo(pip, "py_deps")
+
 
