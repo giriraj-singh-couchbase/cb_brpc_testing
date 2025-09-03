@@ -111,6 +111,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures -- //... -//example/...
 
   gcc-compile-with-boringssl:
@@ -119,6 +125,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --define with_mesalink=false --define with_glog=true --define with_thrift=true --define BRPC_WITH_BORINGSSL=true -- //... -//example/...
 
   gcc-compile-with-bazel-all-options:
@@ -127,6 +139,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --define with_mesalink=false --define with_glog=true --define with_thrift=true --define with_debug_bthread_sche_safety=true --define with_debug_lock=true --define with_asan=true -- //... -//example/...
 
   clang-compile-with-make-protobuf:
@@ -166,6 +184,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang -- //... -//example/...
 
   clang-compile-with-boringssl:
@@ -174,6 +198,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define BRPC_WITH_BORINGSSL=true -- //... -//example/...
 
   clang-compile-with-bazel-all-options:
@@ -182,6 +212,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/install-essential-dependencies
     - uses: ./.github/actions/install-couchbase-cxx-client
+    - run: |
+        mkdir -p third_party
+        ln -sf /usr/include/couchbase-cxx-client third_party/couchbase
+        ln -sf /usr/include/tao third_party/tao
+        ln -sf /usr/include/fmt third_party/fmt
+        echo "✅ Created Couchbase, tao, fmt symlinks (Linux)"
     - run: bazel build --verbose_failures --action_env=CC=clang --define with_mesalink=false --define with_glog=true --define with_thrift=true --define with_debug_bthread_sche_safety=true --define with_debug_lock=true --define with_asan=true -- //... -//example/...
 
   clang-unittest:

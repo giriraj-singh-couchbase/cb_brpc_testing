@@ -238,7 +238,7 @@ http_archive(
     name = "com_google_protobuf",  # 2021-10-29T00:04:02Z
     build_file = "//bazel/third_party/protobuf:protobuf.BUILD",
     patch_cmds = [
-        "sed -i protobuf.bzl -re '4,4d;417,508d'",
+        "sed -i '' -e '4d' -e '417,508d' protobuf.bzl",
     ],
     patch_cmds_win = [
         """$content = Get-Content 'protobuf.bzl' | Where-Object {
@@ -300,3 +300,17 @@ http_archive(
 )
 load("@hedron_compile_commands//:workspace_setup.bzl", "hedron_compile_commands_setup")
 hedron_compile_commands_setup()
+
+new_local_repository(
+    name = "couchbase",
+    path = "/opt/homebrew/opt/couchbase-cxx-client/",
+    build_file_content = """
+cc_library(
+    name = "couchbase_client",
+    hdrs = glob(["include/couchbase/**/*.hxx", "include/couchbase/**/*.h", "include/tao/**/*.hpp"]),
+    includes = ["include"],
+    linkopts = ["-lcouchbase_cxx_client"],
+    visibility = ["//visibility:public"],
+)
+""",
+)

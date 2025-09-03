@@ -20,6 +20,56 @@ licenses(["notice"])  # Apache v2
 
 exports_files(["LICENSE"])
 
+# Couchbase C++ client library (cross-platform)
+cc_library(
+    name = "couchbase_headers",
+    hdrs = glob([
+        "third_party/couchbase/**/*.hxx",
+        "third_party/couchbase/**/*.h",
+        "third_party/tao/**/*.hpp",
+    ]),
+    includes = ["third_party"],
+    linkopts = select({
+        "@platforms//os:macos": [
+            "-L/opt/homebrew/opt/couchbase-cxx-client/lib",
+            "-lcouchbase_cxx_client",
+        ],
+        "@platforms//os:linux": [
+            "-L/usr/lib/couchbase-cxx-client/lib",
+            "-L/usr/lib/x86_64-linux-gnu",
+            "-lcouchbase_cxx_client",
+        ],
+        "//conditions:default": [
+            "-L/usr/lib",
+            "-lcouchbase_cxx_client",
+        ],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+# fmt library (cross-platform)
+cc_library(
+    name = "fmt_headers",
+    hdrs = glob(["third_party/fmt/**/*.h"]),
+    includes = ["third_party"],
+    linkopts = select({
+        "@platforms//os:macos": [
+            "-L/opt/homebrew/opt/fmt/lib",
+            "-lfmt",
+        ],
+        "@platforms//os:linux": [
+            "-L/usr/lib/fmt/lib",
+            "-L/usr/lib/x86_64-linux-gnu",
+            "-lfmt",
+        ],
+        "//conditions:default": [
+            "-L/usr/local/lib",
+            "-lfmt",
+        ],
+    }),
+    visibility = ["//visibility:public"],
+)
+
 COPTS = [
     "-DBTHREAD_USE_FAST_PTHREAD_MUTEX",
     "-D__const__=__unused__",
@@ -336,7 +386,6 @@ cc_library(
     }),
     includes = [
         "src/",
-        "/opt/homebrew/include"
     ],
     linkopts = LINKOPTS,
     visibility = ["//visibility:public"],
@@ -557,6 +606,8 @@ cc_library(
         ":bvar",
         ":json2pb",
         ":mcpack2pb",
+        ":couchbase_headers",
+        ":fmt_headers",
         "@com_github_google_leveldb//:leveldb",
     ] + select({
         "//bazel/config:brpc_with_thrift": [
