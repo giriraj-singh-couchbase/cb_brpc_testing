@@ -40,3 +40,16 @@ git_override(
     remote = 'https://github.com/hedronvision/bazel-compile-commands-extractor.git',
     commit = '1e08f8e0507b6b6b1f4416a9a22cf5c28beaba93', # Jun 28, 2024
 )
+bazel_dep(name = "rules_python", version = "1.5.4")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = "3.13")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+  hub_name = "pypi",
+  python_version = "3.13",
+  requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "pypi")
+
